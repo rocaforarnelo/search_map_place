@@ -24,6 +24,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
     this.hasSearchIcon = true,
     this.tileHeight = 100,
     this.height = 500,
+    this.onSearchStart,
   })  : assert((location == null && radius == null) ||
             (location != null && radius != null)),
         super(key: key);
@@ -43,6 +44,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
 
   /// The callback that is called when one Place is selected by the user.
   final void Function(Place place) onSelected;
+  final VoidCallback onSearchStart;
 
   /// The callback that is called when the user taps on the search icon.
   final void Function(Place place) onSearch;
@@ -213,6 +215,7 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
         children: <Widget>[
           Expanded(
             child: TextField(
+              onTap: widget.onSearchStart,
               decoration: widget.inputDecoration == null
                   ? _inputStyle()
                   : widget.inputDecoration,
