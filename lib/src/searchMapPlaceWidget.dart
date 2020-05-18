@@ -172,13 +172,19 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
                 if (_placePredictions.length > 0)
                   Opacity(
                     opacity: _listOpacity.value,
-                    child: SingleChildScrollView(
-                      child: Column(
-                        children: <Widget>[
-                          for (var prediction in _placePredictions)
-                            _placeOption(Place.fromJSON(prediction, geocode)),
-                        ],
-                      ),
+                    child: ListView.separated(
+                      itemBuilder: (BuildContext context, int index) {
+                        return _placeOption(
+                            Place.fromJSON(_placePredictions[index], geocode));
+                      },
+                      itemCount: _placePredictions.length,
+                      separatorBuilder: (BuildContext context, int index) {
+                        return Container();
+                      },
+                      // children: <Widget>[
+                      //   for (var prediction in _placePredictions)
+                      //     _placeOption(Place.fromJSON(prediction, geocode)),
+                      // ],
                     ),
                   ),
               ],
