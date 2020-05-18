@@ -155,6 +155,13 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
         ),
       );
 
+  @override
+  void setState(fn) {
+    if (mounted) {
+      super.setState(fn);
+    }
+  }
+
   /*
   WIDGETS
   */
