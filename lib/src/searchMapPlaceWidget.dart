@@ -23,6 +23,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
     this.textStyle,
     this.hasSearchIcon = true,
     this.tileHeight = 100,
+    this.height = 500,
   })  : assert((location == null && radius == null) ||
             (location != null && radius != null)),
         super(key: key);
@@ -34,6 +35,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
   final InputDecoration inputDecoration;
   final TextStyle textStyle;
   final double tileHeight;
+  final double height;
 
   /// Placeholder text to show when the user has not entered any input.
   final String placeholder;
@@ -174,19 +176,22 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
                 if (_placePredictions.length > 0)
                   Opacity(
                     opacity: _listOpacity.value,
-                    child: ListView.separated(
-                      itemBuilder: (BuildContext context, int index) {
-                        return _placeOption(
-                            Place.fromJSON(_placePredictions[index], geocode));
-                      },
-                      itemCount: _placePredictions.length,
-                      separatorBuilder: (BuildContext context, int index) {
-                        return Container();
-                      },
-                      // children: <Widget>[
-                      //   for (var prediction in _placePredictions)
-                      //     _placeOption(Place.fromJSON(prediction, geocode)),
-                      // ],
+                    child: SizedBox.fromSize(
+                      size: Size.fromHeight(widget.height),
+                      child: ListView.separated(
+                        itemBuilder: (BuildContext context, int index) {
+                          return _placeOption(Place.fromJSON(
+                              _placePredictions[index], geocode));
+                        },
+                        itemCount: _placePredictions.length,
+                        separatorBuilder: (BuildContext context, int index) {
+                          return Container();
+                        },
+                        // children: <Widget>[
+                        //   for (var prediction in _placePredictions)
+                        //     _placeOption(Place.fromJSON(prediction, geocode)),
+                        // ],
+                      ),
                     ),
                   ),
               ],
