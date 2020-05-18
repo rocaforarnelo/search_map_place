@@ -191,7 +191,9 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
         children: <Widget>[
           Expanded(
             child: TextField(
-              decoration: _inputStyle(),
+              decoration: widget.inputDecoration == null
+                  ? _inputStyle()
+                  : widget.inputDecoration,
               controller: _textEditingController,
               onSubmitted: (_) => _selectPlace(),
               onEditingComplete: _selectPlace,
