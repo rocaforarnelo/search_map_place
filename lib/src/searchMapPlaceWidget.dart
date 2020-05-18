@@ -22,6 +22,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
     this.inputDecoration,
     this.textStyle,
     this.hasSearchIcon = true,
+    this.tileHeight = 100,
   })  : assert((location == null && radius == null) ||
             (location != null && radius != null)),
         super(key: key);
@@ -32,6 +33,7 @@ class SearchMapPlaceWidget extends StatefulWidget {
   final String apiKey;
   final InputDecoration inputDecoration;
   final TextStyle textStyle;
+  final double tileHeight;
 
   /// Placeholder text to show when the user has not entered any input.
   final String placeholder;
@@ -241,23 +243,26 @@ class _SearchMapPlaceWidgetState extends State<SearchMapPlaceWidget>
   Widget _placeOption(Place prediction) {
     String place = prediction.description;
 
-    return MaterialButton(
-      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
-      onPressed: () => _selectPlace(prediction: prediction),
-      child: ListTile(
-        title: Text(
-          place.length < 45
-              ? "$place"
-              : "${place.replaceRange(45, place.length, "")} ...",
-          style: TextStyle(
-            fontSize: MediaQuery.of(context).size.width * 0.04,
-            color: widget.darkMode ? Colors.grey[100] : Colors.grey[850],
+    return SizedBox.fromSize(
+      size: Size.fromHeight(widget.tileHeight),
+      child: MaterialButton(
+        padding: EdgeInsets.symmetric(horizontal: 5, vertical: 3),
+        onPressed: () => _selectPlace(prediction: prediction),
+        child: ListTile(
+          title: Text(
+            place.length < 45
+                ? "$place"
+                : "${place.replaceRange(45, place.length, "")} ...",
+            style: TextStyle(
+              fontSize: MediaQuery.of(context).size.width * 0.04,
+              color: widget.darkMode ? Colors.grey[100] : Colors.grey[850],
+            ),
+            maxLines: 1,
           ),
-          maxLines: 1,
-        ),
-        contentPadding: EdgeInsets.symmetric(
-          horizontal: 10,
-          vertical: 0,
+          contentPadding: EdgeInsets.symmetric(
+            horizontal: 10,
+            vertical: 0,
+          ),
         ),
       ),
     );
